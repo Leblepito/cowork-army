@@ -1,0 +1,29 @@
+# Dependencies
+frontend/node_modules
+backend/**/bin
+backend/**/obj
+
+# IDE
+.vs
+.vscode
+.idea
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# Docs
+docs/
+*.md
+!README.md
+
+# Superpowers
+.superpowers/
+.claude/
+
+# Local dev
+docker-compose.yml
+*.db
+*.db-journal
