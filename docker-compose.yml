@@ -23,6 +23,18 @@ services:
     depends_on:
       - db
 
+  claude-bridge:
+    build: ./tools/claude-bridge
+    ports:
+      - "127.0.0.1:8889:8889"
+    environment:
+      COWORK_BACKEND_URL: "http://backend:8888"
+      PORT: "8889"
+      DEBOUNCE_MS: "500"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
   frontend:
     build: ./frontend
     ports:

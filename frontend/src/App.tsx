@@ -114,6 +114,18 @@ export default function App() {
       });
       store.addLog(ev.effect === 'complete' ? '✅' : '❌', `${ev.agentId} task ${ev.effect}`);
     },
+    onClaudeAction: (ev) => {
+      store.addClaudeEvent(ev);
+      store.addLog('🤖', `Claude [${ev.tool}]: ${ev.summary.slice(0, 50)}`);
+    },
+    onClaudeTaskStart: (ev) => {
+      store.startClaudeTask(ev);
+      store.addLog('🚀', `Claude task started: ${ev.title}`);
+    },
+    onClaudeTaskComplete: (ev) => {
+      store.completeClaudeTask(ev.taskId, ev.status);
+      store.addLog('🏁', `Claude task ${ev.status}: ${ev.taskId}`);
+    },
   }, store.setConnectionState);
 
   // ── Data Bridge polling ────────────────────────────────────────────────────
