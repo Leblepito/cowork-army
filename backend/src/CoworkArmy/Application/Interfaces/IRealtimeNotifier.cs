@@ -20,6 +20,9 @@ public interface IRealtimeNotifier
     Task SendHotelFeedAsync(CoworkArmy.Domain.DataBridge.HotelFeed feed);
     Task SendChatTypingAsync(string agentId, bool isTyping);
     Task SendChatMessageAsync(string agentId, string agentIcon, string role, string content);
+    Task SendClaudeActionAsync(string tool, string? file, string agentId, string summary);
+    Task SendClaudeTaskStartAsync(string taskId, string title, string scope, string[] agents);
+    Task SendClaudeTaskCompleteAsync(string taskId, string status, int durationMs);
 }
 
 public interface IStatusTracker

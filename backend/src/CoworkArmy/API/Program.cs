@@ -82,6 +82,7 @@ HREndpoints.Map(app);
 AuthEndpoints.Map(app);
 ExternalEndpoints.Map(app);
 DataBridgeEndpoints.Map(app);
+ClaudeBridgeEndpoints.Map(app);
 
 // ═══ SignalR hub ═══
 app.MapHub<CoworkHub>("/hub");

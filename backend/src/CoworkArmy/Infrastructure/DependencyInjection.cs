@@ -119,6 +119,14 @@ public static class DependencyInjection
         services.AddScoped<CoworkArmy.Domain.Chat.IChatRepository, CoworkArmy.Infrastructure.Persistence.ChatRepository>();
         services.AddScoped<CoworkArmy.Application.Chat.Queries.GetConversationsQueryHandler>();
 
+        // Claude Bridge
+        services.AddScoped<CoworkArmy.Domain.ClaudeBridge.IClaudeBridgeRepository, CoworkArmy.Infrastructure.ClaudeBridge.ClaudeBridgeRepository>();
+        services.AddScoped<CoworkArmy.Application.ClaudeBridge.RecordClaudeEventHandler>();
+        services.AddScoped<CoworkArmy.Application.ClaudeBridge.StartClaudeTaskHandler>();
+        services.AddScoped<CoworkArmy.Application.ClaudeBridge.CompleteClaudeTaskHandler>();
+        services.AddScoped<CoworkArmy.Application.ClaudeBridge.GetClaudeTasksHandler>();
+        services.AddScoped<CoworkArmy.Application.ClaudeBridge.GetClaudeEventsHandler>();
+
         // HR
         services.AddScoped<CoworkArmy.Application.HR.HRSpawnHandler>();
         services.AddScoped<CoworkArmy.Application.HR.HRRetireHandler>();

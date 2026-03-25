@@ -5,6 +5,7 @@ using CoworkArmy.Domain.Tasks;
 using CoworkArmy.Domain.Events;
 using CoworkArmy.Infrastructure.Messaging;
 using CoworkArmy.Domain.Chat;
+using CoworkArmy.Domain.ClaudeBridge;
 
 namespace CoworkArmy.Infrastructure.Persistence;
 
@@ -21,6 +22,8 @@ public class CoworkDbContext : DbContext
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
     public DbSet<ChatConversation> ChatConversations => Set<ChatConversation>();
     public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
+    public DbSet<ClaudeEvent> ClaudeEvents => Set<ClaudeEvent>();
+    public DbSet<ClaudeTask> ClaudeTasks => Set<ClaudeTask>();
 
     public CoworkDbContext(DbContextOptions<CoworkDbContext> options) : base(options) { }
 
@@ -116,6 +119,27 @@ public class CoworkDbContext : DbContext
             e.HasKey(m => m.Id);
             e.HasIndex(m => m.ConversationId);
             e.HasIndex(m => m.Timestamp);
+        });
+
+        b.Entity<ClaudeEvent>(e =>
+        {
+            e.ToTable("claude_events");
+            e.HasKey(ce => ce.Id);
+            e.Property(ce => ce.Id).ValueGeneratedOnAdd();
+            e.HasIndex(ce => ce.AgentId);
+            e.HasIndex(ce => ce.TaskId);
+            e.HasIndex(ce => ce.CreatedAt);
+            e.Property(ce => ce.Metadata).HasDefaultValue("{}");
+        });
+
+        b.Entity<ClaudeTask>(e =>
+        {
+            e.ToTable("claude_tasks");
+            e.HasKey(ct => ct.Id);
+            e.Property(ct => ct.Status).HasConversion<string>();
+            e.HasIndex(ct => ct.Status);
+            e.HasIndex(ct => ct.CreatedAt);
+            e.Property(ct => ct.AssignedAgents).HasDefaultValue("[]");
         });
     }
 }

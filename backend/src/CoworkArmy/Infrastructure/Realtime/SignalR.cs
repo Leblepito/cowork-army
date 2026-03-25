@@ -84,4 +84,13 @@ public class SignalRNotifier : IRealtimeNotifier
 
     public Task SendChatMessageAsync(string agentId, string agentIcon, string role, string content)
         => _hub.Clients.All.SendAsync("ChatMessage", new { agentId, agentIcon, role, content, timestamp = DateTime.UtcNow });
+
+    public async Task SendClaudeActionAsync(string tool, string? file, string agentId, string summary)
+        => await _hub.Clients.All.SendAsync("ClaudeAction", new { tool, file, agentId, summary, timestamp = DateTimeOffset.UtcNow });
+
+    public async Task SendClaudeTaskStartAsync(string taskId, string title, string scope, string[] agents)
+        => await _hub.Clients.All.SendAsync("ClaudeTaskStart", new { taskId, title, scope, agents, timestamp = DateTimeOffset.UtcNow });
+
+    public async Task SendClaudeTaskCompleteAsync(string taskId, string status, int durationMs)
+        => await _hub.Clients.All.SendAsync("ClaudeTaskComplete", new { taskId, status, durationMs, timestamp = DateTimeOffset.UtcNow });
 }
